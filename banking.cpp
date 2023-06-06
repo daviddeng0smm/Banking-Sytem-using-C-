@@ -62,8 +62,9 @@ class Bank
                 cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
                 Client* clientInfo = new Client{name,initialDeposit};
                 storage[name] = clientInfo;
-                cout << "I have successfully created an account for you " << clientInfo->returnName() << " , and I have deposited  $" << initialDeposit << "for you." << endl
-                     << "Your current balance is $"<< clientInfo->returnBalance() << "." << endl;
+                cout << endl;2
+                cout << "I have successfully created an account for you " << clientInfo->returnName() << " , and I have deposited $" << initialDeposit << " for you." << endl;
+
             }
             else
             {
@@ -116,6 +117,58 @@ int openMenu(string name) {
 
     return option;
 }
+
+int main()
+{
+    Bank temp;
+    int option = 0;
+    string answer,name, answerTwo;
+    while(option!=5)
+    {
+
+
+        cout << "What is your name:";
+
+        getline(cin, name);
+
+        transform(name.begin(), name.end(), name.begin(), ::toupper);
+        option = openMenu(name);
+
+        if (option == 1) {
+            temp.createAccount(name);
+        } else if (option == 2) {
+            Client *a = temp.getClientInfo(name);
+            Client *c = temp.getClientInfo(name);
+            int b = c->returnBalance();
+            cout << "You have a balance of $" << b << endl;
+        } else if (option == 3) {
+            Client *a = temp.getClientInfo(name);
+            int depositAmount;
+            cout << "Please enter the amount you would like to deposit today:" << endl;
+            cin >> depositAmount;
+            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+            cout << "You previously had a balance of: $" << a->returnBalance() << endl
+                 << "After depositing, you have a balance of: $";
+            a->deposit(depositAmount);
+            cout << a->returnBalance() << endl;
+        } else if (option == 4) {
+            int withdrawalAmount;
+            Client *a = temp.getClientInfo(name);
+            cout << "You have a balance of: $" << a->returnBalance() << endl;
+            cout << "How much would you like to withdrawal today?";
+            cin >> withdrawalAmount;
+            cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+            a->withDrawl(withdrawalAmount);
+            cout << "You have a new balance of: $" << a->returnBalance() << endl;
+        } else if (option == 5){
+            cout << "Pleasure to help you today!" << name << endl;
+
+        }
+        }
+    return 0;
+    }
+
+
 
 int main()
 {
